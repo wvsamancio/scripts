@@ -7,25 +7,23 @@ platforms='platforms;android-30'
 
 set -e
 
-echo "Installing Dependencies..."
+echo $'\nInstalling dependencies...\n'
 sudo apt -qq update && sudo apt -yqq install $dependencies
 
-echo "Downloading Command Line Tools..."
-curl $url_cmd_line_tools > tools.zip && unzip -q tools.zip
+echo $'\nDownloading command line yools...\n'
+curl $url_cmd_line_tools > tools.zip
 
-echo "Configuring Tools Directory..."
-mkdir -p ${HOME}/Android && mv cmdline-tools ${HOME}/Android
+echo $'\nConfiguring tools settings...\n'
+sudo mkdir -p /opt/android-sdk/cmdline-tools && sudo unzip -q tools.zip -d /opt/android-sdk/cmdline-tools
+sudo mv /opt/android-sdk/cmdline-tools/cmdline-tools /opt/android-sdk/cmdline-tools/latest
+sudo ln -s /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager /usr/bin/sdkmanager
 
-echo "Downloading Android Tools..."
-${HOME}/Android/cmdline-tools/bin/sdkmanager \
-    --sdk_root=${HOME}/Android/ \
-    --install $build_tools $platforms <<< "y" > /dev/null 2>&1
+echo $'\nDownloading sdk tools...\n'
+sudo sdkmanager --install $build_tools $platforms <<< "y" > /dev/null 2>&1
 
-${HOME}/Android/cmdline-tools/bin/sdkmanager \
-    --sdk_root=${HOME}/Android/ \
-    --list_installed
-
-echo "Removing \"tools.zip\"..."
+echo $'\nRemoving "tools.zip"...\n'
 rm -f tools.zip
 
-echo "Script Done!"
+sdkmanager --list_installed
+
+echo $'\nScript Done!\n'
