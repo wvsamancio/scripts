@@ -3,9 +3,7 @@
 dependencies=''
 url_flutter='https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_1.22.5-stable.tar.xz'
 
-set -e
-
-echo $'\nChecking dependencies...\n'
+echo -e "Checking dependencies...\n"
 
 [ ! $(which bash) ] && dependencies+=' bash'
 [ ! $(which curl) ] && dependencies+=' curl'
@@ -17,37 +15,39 @@ echo $'\nChecking dependencies...\n'
 [ ! $(which xz) ] && dependencies+=' xz-utils'
 
 if [ "$dependencies" ]; then
-    echo $'\nInstalling dependencies...\n'
+    echo -e "Installing $dependencies...\n"
     sudo apt -qq update && sudo apt -yqq install $dependencies
 else
-    echo $'\nDependencies are already installed.\n'
+    echo -e "Dependencies are already installed.\n"
 fi
 
-echo $'\nDownloading flutter...\n'
+echo -e "Downloading flutter...\n"
 
 curl $url_flutter > flutter.tar.xz
 
-echo $'\nConfiguring flutter...\n'
+echo -e "Configuring flutter...\n"
 
 tar xf flutter.tar.xz && mv flutter .flutter
 if [ $(pwd) != "$HOME" ]; then
     mv .flutter ~
 fi
 
+echo -e "Configuring environment...\n"
+
 export PATH="$PATH:$HOME/.flutter/bin"
 
 tee -a ~/.bashrc <<<'
 export PATH="$PATH:$HOME/.flutter/bin"
-' > /dev/null 2>&1
+'
 
-echo $'\nDownloading flutter tools...\n'
+echo -e "Downloading flutter tools...\n"
 
 flutter precache
 yes | flutter doctor --android-licenses
 flutter doctor
 
-echo $'\nRemoving "tools.zip"...\n'
+echo -e "Removing \"flutter.tar.xz\"...\n"
 
 rm -f flutter.tar.xz
 
-echo $'\nScript Done!\n'
+echo -e "Script Done!"
