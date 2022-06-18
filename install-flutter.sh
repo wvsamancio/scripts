@@ -33,15 +33,18 @@ tar xf flutter.tar.xz && mv flutter .flutter
 if [ $(pwd) != "$HOME" ]; then
     mv .flutter ~
 fi
+
+export PATH="$PATH:$HOME/.flutter/bin"
+
 tee -a ~/.bashrc <<<'
 export PATH="$PATH:$HOME/.flutter/bin"
 ' > /dev/null 2>&1
 
 echo $'\nDownloading flutter tools...\n'
 
-${HOME}/.flutter/bin/flutter precache
-yes | ${HOME}/.flutter/bin/flutter doctor --android-licenses
-${HOME}/.flutter/bin/flutter doctor
+flutter precache
+yes | flutter doctor --android-licenses
+flutter doctor
 
 echo $'\nRemoving "tools.zip"...\n'
 

@@ -28,6 +28,11 @@ echo $'\nConfiguring tools settings...\n'
 
 mkdir -p ~/.android/android-sdk/cmdline-tools && unzip -q tools.zip -d ~/.android/android-sdk/cmdline-tools
 mv ~/.android/android-sdk/cmdline-tools/cmdline-tools ~/.android/android-sdk/cmdline-tools/latest
+
+export PATH="$PATH:$HOME/.android/android-sdk/cmdline-tools/latest/bin"
+export ANDROID_HOME="$HOME/.android/android-sdk"
+export ANDROID_SDK_ROOT="$HOME/.android/android-sdk"
+
 tee -a ~/.bashrc <<<'
 export PATH="$PATH:$HOME/.android/android-sdk/cmdline-tools/latest/bin"
 export ANDROID_HOME="$HOME/.android/android-sdk"
@@ -36,7 +41,7 @@ export ANDROID_SDK_ROOT="$HOME/.android/android-sdk"
 
 echo $'\nDownloading sdk tools...\n'
 
-yes | ${HOME}/.android/android-sdk/cmdline-tools/latest/bin/sdkmanager --install $build_tools $platforms > /dev/null 2>&1
+yes | sdkmanager --install $build_tools $platforms > /dev/null 2>&1
 
 echo $'\nRemoving "tools.zip"...\n'
 
@@ -44,4 +49,4 @@ rm -f tools.zip
 
 echo $'\nScript Done!\n'
 
-${HOME}/.android/android-sdk/cmdline-tools/latest/bin/sdkmanager --list_installed
+sdkmanager --list_installed
