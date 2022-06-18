@@ -43,8 +43,9 @@ export PATH="$PATH:$HOME/.flutter/bin"
 echo -e "Downloading flutter tools...\n"
 
 flutter precache
-yes | flutter doctor --android-licenses
 flutter doctor
+yes | flutter doctor --android-licenses
+flutter --version
 
 echo -e "Removing \"flutter.tar.xz\"...\n"
 
