@@ -45,3 +45,5 @@ rm -f tools.zip
 echo $'\nScript Done!\n'
 
 ${HOME}/.android/android-sdk/cmdline-tools/latest/bin/sdkmanager --list_installed
+
+exec $SHELL
